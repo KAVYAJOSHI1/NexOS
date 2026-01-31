@@ -1,0 +1,103 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reply",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "prompt": "=Draft a professional reply for Kavya Joshi.\n\nContext: {{ $node[\"Webhook\"].json[\"body\"][\"context\"] }}\nText to Reply to: {{ $node[\"Webhook\"].json[\"body\"][\"text\"] }}",
+        "hasSystemMessage": true,
+        "systemMessage": "You are Kavya Joshi, an SIH 2025 winner and tech enthusiast. Sound professional and technical."
+      },
+      "id": "ai-chain",
+      "name": "AI Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "gemini-1.5-pro"
+      },
+      "id": "gemini-model",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        650,
+        500
+      ],
+      "credentials": {
+        "googleGeminiChatApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "provider": "googleGeminiChatApi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"reply\": $json.text }"
+      },
+      "id": "respond-to-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Chain": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

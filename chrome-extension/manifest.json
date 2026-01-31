@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "NexOS: AI Reply Agent",
+  "version": "1.0.0",
+  "description": "Local-first AI content & reply layer.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://localhost:5678/*"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "js": ["src/content/index.jsx"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background/index.js",
+    "type": "module"
+  }
+}

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=nexos
+      - POSTGRES_PASSWORD=nexos_password
+      - POSTGRES_DB=nexos_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - nexos_net
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=Asia/Kolkata
+      - N8N_EDITOR_BASE_URL=http://localhost:5678/
+      - N8N_CORS_ORIGIN=*
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=nexos_db
+      - DB_POSTGRESDB_USER=nexos
+      - DB_POSTGRESDB_PASSWORD=nexos_password
+    depends_on:
+      - postgres
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./:/data
+    networks:
+      - nexos_net
+
+volumes:
+  postgres_data:
+  n8n_data:
+
+networks:
+  nexos_net:
+    driver: bridge

@@ -1,0 +1,27 @@
+{
+    "name": "Kavya",
+    "role": "Computer Science Student & Full Stack Developer",
+    "achievements": [
+        "Winner of Smart India Hackathon (SIH) 2025 for CoastScan project",
+        "ACM Membership Chair at GLS University",
+        "Hackathon winner in IoT Security and FinTech domains",
+        "DRDO Hackathon Winner"
+    ],
+    "skills": [
+        "React",
+        "Node.js",
+        "Docker",
+        "IoT Security",
+        "Extension Development"
+    ],
+    "styles": {
+        "professional": "Polite, concise, highlighting achievements subtly.",
+        "hacker": "Technical, direct, focus on implementation details.",
+        "curious": "Asking insightful questions, showing eagerness to learn."
+    },
+    "context_triggers": {
+        "IoT": "Mention DRDO Hackathon win",
+        "Security": "Mention CoastScan project",
+        "Leadership": "Mention ACM Membership Chair role"
+    }
+}
