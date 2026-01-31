@@ -3,7 +3,7 @@
 
 NexOS is a local-first AI Agent that lives in your browser. It doesn't just "generate text"—it acts as **You**. Integrated with **n8n** and **Google Gemini**, NexOS learns your Identity Profile to draft replies, polish emails, and rewrite messages in your unique voice.
 
-![NexOS Interface](https://via.placeholder.com/800x400?text=NexOS+Premium+UI)
+
 
 ## 🚀 Key Features
 
